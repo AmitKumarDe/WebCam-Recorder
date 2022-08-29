@@ -20,51 +20,53 @@ navigator.mediaDevices
     let chunks = [];
     // console.log(record);
 
-    document
-      .getElementById("start_video")
-      .addEventListener("click", function () {
-        record.start();
-        console.log("Starting");
-      });
+    let camera_button = document.getElementById("start_video");
+    let pause_button = document.getElementById("pause_video");
+    let resume_button = document.getElementById("resume_video");
+    let stop_button = document.getElementById("stop_video");
 
-    document
-      .getElementById("pause_video")
-      .addEventListener("click", function () {
-        record.pause();
-        console.log("Pause.......");
-      });
+    camera_button.addEventListener("click", function () {
+      record.start();
+      console.log("Starting");
+      console.log(camera_button.textContent);
+      camera_button.textContent = "Start Recording";
+      console.log(camera_button.textContent);
+    });
 
-    document
-      .getElementById("resume_video")
-      .addEventListener("click", function () {
-        record.resume();
-        console.log("resume.....");
-      });
+    pause_button.addEventListener("click", function () {
+      record.pause();
+      console.log("Pause.......");
+      pause_button.textContent = "Video Pause";
+    });
 
-    document
-      .getElementById("stop_video")
-      .addEventListener("click", function () {
-        record.stop();
-        console.log("Stop.......");
-      });
+    resume_button.addEventListener("click", function () {
+      record.resume();
+      console.log("resume.....");
+      resume_button.textContent = "Video resume";
+    });
+
+    stop_button.addEventListener("click", function () {
+      record.stop();
+      console.log("Stop.......");
+      stop_button.textContent = "Recording Stop";
+    });
 
     record.ondataavailable = function (e) {
       chunks.push(e.data);
-      console.log(e);
+      console.log("data is :- ", e);
     };
 
     record.onstop = function () {
       let videoTwo = document.getElementById("video2");
       let newStream = new Blob(chunks, { type: "video / mp4" });
       console.log(newStream);
-      chunks = [];
+      // chunks = [];
 
       videoTwo.src = URL.createObjectURL(newStream);
     };
 
-
     //take a selfie
-    
+
     document
       .getElementById("take_picture")
       .addEventListener("click", function () {
